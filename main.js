@@ -6,7 +6,15 @@ var oldX;
 var oldY;
 var toucholdX;
 var toucholdY;
+var swidth = screen.width;
+var nwidth = screen.width-70;
+var nheight = screen.height-300;
 var mouseEvent="empty"
+if(swidth<992){
+    document.getElementById("myCanvas").width = nwidth;
+    document.getElementById("myCanvas").height = nheight;
+    document.body.style.overflow="hidden";
+    }
 canvas.addEventListener("mousedown",mdn)
 function mdn() {
     color = document.getElementById("col").value;
@@ -50,18 +58,18 @@ function tct(e){
 canvas.addEventListener("touchmove",tcm)
 function tcm(f){
     console.log("touchmove")
-    touchx=f.touches[0].clientX - canvas.offsetTop;
-    touchy=f.touches[0].clientY - canvas.offsetLeft;
+    touchx=f.touches[0].clientX-canvas.offsetTop;
+    touchy=f.touches[0].clientY-canvas.offsetLeft;
     ctx.beginPath();
     ctx.strokeStyle = color;
     ctx.lineWidth = width;
+    console.log("Last position of x coordinate: "+toucholdX+"and the Y coordinate: "+toucholdY);
     ctx.moveTo(toucholdX,toucholdY);
+    console.log("New position of x coordinate: "+touchx+"and the Y coordinate: "+touchy);
     ctx.lineTo(touchx,touchy);
     ctx.stroke();
-    console.log("Last position of x coordinate: "+toucholdX+"and the Y coordinate: "+toucholdY);
-   
-    console.log("New position of x coordinate: "+touchx+"and the Y coordinate: "+touchy);
-
+toucholdX=touchx;
+toucholdY=touchy
 }
 function wipe(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
